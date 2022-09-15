@@ -21,10 +21,7 @@ ble.name = "Smart Watch"
 display.fill(0)
 display.show()
 
-print("i2c module", dir(i2c))
-print("ble module", dir(ble))
-print("uart module", dir(uart))
-print("advertisement module", dir(advertisement))
+
 def text(lat, lon, alt):
 
     try:
@@ -46,11 +43,19 @@ def text(lat, lon, alt):
         print("To test the framebuf font setup, you'll need the font5x8.bin file https://github.com/adafruit/Adafruit_CircuitPython_framebuf/Tree in the same directory as this script")
 
 
-def connect_with_bluetooth():
+def print_outputs():
+    #print("i2c module", dir(i2c))
+    #print("ble module", dir(ble))
+    print("uart module", dir(uart.bleio_service.uuid))
+    #print("advertisement module", dir(advertisement))
+
+print_outputs()
+
+while True:
     # Try to connect
     ble.start_advertising(advertisement)
     while not ble.connected:
-        pass  # Do this while not connected to a device
+        pass # Do this while not connected to a device
     while ble.connected:
         if uart.in_waiting:
             try:
@@ -59,7 +64,4 @@ def connect_with_bluetooth():
                     text(packet.latitude, packet.longitude, packet.altitude)
             except ValueError:
                 print("""Issue with checksum in   File "adafruit_bluefruit_connect/packet.py", line 121, in from_stream
-    File "adafruit_bluefruit_connect/packet.py", line 73, in from_bytes""")
-
-while True:
-    connect_with_bluetooth()
+  File "adafruit_bluefruit_connect/packet.py", line 73, in from_bytes""")
