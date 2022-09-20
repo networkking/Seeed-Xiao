@@ -1,0 +1,24 @@
+This is a project to get a custom made smart watch up and running. 
+
+Current physical items being used:
+
+
+
+Main microprocessor: 
+  Seeed Studio XIAO nRF52840 Sense
+
+Breakout Boards:
+  Adafruit 4410 Micro Lipo Charger for LiPoly Batt with USB Type C Jack
+  Adafruit 3296 DS1307 Real Time Clock Breakout Board
+  MakerFocus OLED Display Module I2C IIC 128X64 0.96 Inch Display Module SSD1315 Yellow Blue Two-Color Display with Pins for Ar duino UNO R3 STM
+  
+  
+Batteries: 
+  Adafruit Lithium Ion Polymer Battery - 3.7v 150mAh
+  LiCB CR1225 Battery
+
+Display Trying to get to work is:
+  1.28inch Round LCD Display Module
+  
+  
+Main code is in Current Watch Configuration File. The rest of them are just trying to get them to work as individual modules
