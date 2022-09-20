@@ -127,12 +127,13 @@ increment = 0
 
 
 while increment < 10:
-    dots()
-    lines()
-    inverse_lines()
-    rectangles()
-    text()
-    inverse_text()
+    # dots()
+    # lines()
+    # inverse_lines()
+    # rectangles()
+    # text()
+    # inverse_text()
+    print(dir(display.pixel))
     display.fill(0)
     display.show()
     increment += 1

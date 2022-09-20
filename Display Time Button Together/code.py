@@ -6,6 +6,7 @@ import adafruit_character_lcd.Character_LCD_I2C as cl
 import adafruit_ssd1306
 import adafruit_ds1307
 
+
 # Setting up board
 i2c = I2C(board.SCL, board.SDA)
 rtc = adafruit_ds1307.DS1307(i2c)
@@ -20,36 +21,26 @@ button2.pull = Pull.DOWN
 
 def display_time(ct):
     display.fill(0)
-
-    # (tm_year=2022, tm_mon=9, tm_mday=15, tm_hour=17, tm_min=15, tm_sec=22, tm_wday=3, tm_yday=-1, tm_isdst=-1)
-
-    try:  # x  #y #on/off
-
-        display.text(f"{ct.tm_year}", 46, 0, 1)
-        day_len = len(f"{days[ct.tm_wday]}")
-        display.text(f"{days[ct.tm_wday]}", 32 + day_len, 16, 1)
-        time_len = len(f"{ct.tm_hour}:{ct.tm_min}:{ct.tm_sec}")
-        # yellow starts at 15
-        display.text(f"{ct.tm_hour}:{ct.tm_min}:{ct.tm_sec}", 32 + time_len, 24, 1)
-        display.show()
-
-        # Not sure what this does
-        char_width = 6
-        char_height = 8
-        chars_per_line = display.width // 6
-        for i in range(255):
-            x = char_width * (i % chars_per_line)
-            y = char_height * (i // chars_per_line)
-            display.text(chr(i), x, y, 1)
-    except FileNotFoundError:
-        print(
-            "To test the framebuf font setup, you'll need the font5x8.bin file https://github.com/adafruit/Adafruit_CircuitPython_framebuf/Tree in the same directory as this script")
-        time.sleep(1)
+    # (tm_year=2022, tm_mon=9, tm_mday=15, tm_hour=17, tm_min=15, tm_sec=22, tm_wday=3, tm_yday=-1, tm_isdst=-1
+    year_len = len(f"{ct.tm_year}")
+    display.text(f"{ct.tm_year}", (display.width//2-year_len*2)-6, 0, 1)
+    day_len = len(f"{days[ct.tm_wday]}")
+    display.text(f"{days[ct.tm_wday]}", (display.width//2-day_len*2)-6, 16, 1)
+    time_len = len(f"{ct.tm_hour}:{ct.tm_min}:{ct.tm_sec}")
+    display.text(f"{ct.tm_hour}:{ct.tm_min}:{ct.tm_sec}", (display.width//2-time_len*2)-6, 24, 1)
+    display.show()
 
 
-def button_1_function(words):
+
+
+def button_1_function(menu):
     display.fill(0)
-    display.display_time(f"{words}", 46, 0, 1)
+    x = 0
+    y = 16
+    display.text("MENU", (display.width//2-len("MENU")*2)-8, 0, 1)
+    for option in menu:
+        display.text(f"{option}", x, y, 1)
+        y += 8
     display.show()
     time.sleep(5)
     state.pop()
@@ -57,10 +48,12 @@ def button_1_function(words):
 
 def button_2_function(words):
     display.fill(0)
-    display.text(f"{words}", 46, 0, 1)
+    display.text(f"{words}", 0, 16, 1)
+    display.circle()
     display.show()
     time.sleep(5)
     state.pop()
+
 
 
 def get_input():
@@ -75,6 +68,7 @@ def get_input():
 # Setting in variables
 days = {0: "Monday", 1: "Tuesday", 2: "Wednesday", 3: "Thursday", 4: "Friday", 5: "Saturday", 6: "Sunday", }
 state = [display_time]
+menu = ["Set Time", "Change Color", "Timer", "Alarm"]
 display.fill(0)
 
 while True:
@@ -85,7 +79,17 @@ while True:
         state[-1](current_time)
 
     elif state[-1] != display_time:
-        if "1" in state[-1]:
-            state[-1]("Button 1 was pressed")
-        elif "2" in state[-1]:
+        if state[-1] == button_1_function:
+            state[-1](menu)
+        if state[-1] == button_2_function:
             state[-1]("Button 2 was pressed")
+
+
+
+
+
+
+
+    display.show()
+    if time_pushed + 5 == time.time()
+        state.pop()

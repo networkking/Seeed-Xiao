@@ -16,3 +16,6 @@ rtc = adafruit_ds1307.DS1307(i2c)
 # This prints the current time
 r = rtc.datetime
 print(r)
+
+
+# For this computer to print time
